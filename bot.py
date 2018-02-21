@@ -25,56 +25,49 @@ def main():
     updater.idle()
 
 def greet_user(bot, update):
-    print (update)
     replay_back_text = greeting_text.format(update.message.chat.first_name)
-    logging.info ("Bot started")
+    logging.info("Bot started")
     update.message.reply_text(replay_back_text)
 
 def find_planet(bot, update):
-    print (update)
     planet_name = get_planet_name(update.message.text)
+    if planet_name == "":
+        logging.info("Wrong format")
+        update.message.reply_text('Пример использования команды: "/planet Mars"')
+        return
     replay_back_text = get_constellation(planet_name)
-    logging.info ("Found planet")
+    logging.info("Found planet")
     update.message.reply_text(replay_back_text)    
 
 def get_planet_name(command):
-    return command[7:].strip()
+    command_list = command.split()
+    if len(command_list) > 1:
+        return command_list[1]
+    else:
+        return ""
 
+
+
+    return command.split()[1]
 
 def get_constellation (planet_name):
-    planet = ""
+    planets = {
+    "Mercury":ephem.Mercury,
+    "Venus":ephem.Venus,
+    "Mars":ephem.Mars,
+    "Jupiter":ephem.Jupiter,
+    "Saturn":ephem.Saturn,
+    "Uranus":ephem.Uranus,
+    "Neptune":ephem.Neptune,
+    "Pluto":ephem.Pluto,
+    "Moon":ephem.Moon,
+    }
 
-    if planet_name == "Mercury":
-        planet = ephem.Mercury(datetime.today())
-        
-    if planet_name == "Venus":
-        planet = ephem.Venus(datetime.today())
-
-    if planet_name == "Mars":
-        planet = ephem.Mars(datetime.today())
-
-    if planet_name == "Jupiter":
-        planet = ephem.Jupiter(datetime.today())
-
-    if planet_name == "Saturn":
-        planet = ephem.Saturn(datetime.today())
-
-    if planet_name == "Uranus":
-        planet = ephem.Uranus(datetime.today())
-
-    if planet_name == "Neptune":
-        planet = ephem.Neptune(datetime.today())
-
-    if planet_name == "Pluto":
-        planet = ephem.Pluto(datetime.today())
-
-    if planet_name == "Moon":
-        planet = ephem.Moon(datetime.today())
-
-    if planet !="":
+    if planet_name in planets:
+        planet = planets[planet_name](datetime.today())
         return ephem.constellation(planet)[1]
     else:
-        return "Failed to find " + planet_name
+        return "Такой планеты в нашем космосе нет: " + planet_name
 
-
-main()
+if __name__ == "__main__":
+   main()

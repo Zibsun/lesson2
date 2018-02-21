@@ -13,15 +13,12 @@ def find_person(name, names):
 def ask_user():
     try:
         while True:
-
-            answer = input (get_question() + " ")
+            answer = input(random.choice(irritating_questions) + " ")
             if answer.lower() == "хорошо":
                 break
     except KeyboardInterrupt:
         print ("\nПока")
 
-def get_question():
-    return random.choice(irritating_questions)
 
 
 find_person("Маш", l)

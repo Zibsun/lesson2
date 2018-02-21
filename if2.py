@@ -1,4 +1,4 @@
-def compare_str (a, b):
+def compare_str(a, b):
     if a == b:
         return 1
     else:
