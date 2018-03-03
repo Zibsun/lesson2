@@ -6,6 +6,6 @@ with open('export.csv', 'w', encoding='utf-8') as f:
     fields = ['question', 'answer']
     writer = csv.DictWriter(f, fields, delimiter=';')
     writer.writeheader()
-    for question in questions:
-        row = {"question": question, "answer": questions[question]}
+    for question, answer in questions.items():
+        row = {"question": question, "answer": answer}
         writer.writerow(row)
