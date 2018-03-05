@@ -20,7 +20,6 @@ def ask_user():
         print ("\nПока")
 
 
-
 find_person("Маш", l)
 
 ask_user()
