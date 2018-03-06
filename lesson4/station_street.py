@@ -1,3 +1,6 @@
+# Объединить наборы данных из предыдущих задач и посчитать, у какой станции метро больше всего остановок 
+# (в радиусе 0.5 км).
+
 import json
 import operator
 from datetime import datetime
@@ -5,14 +8,15 @@ from collections import Counter
 import gpxpy.geo
 
 def get_distance(lat1, lon1, lat2, lon2):
+    # расстояние между двумя точками
     return gpxpy.geo.haversine_distance(lat1, lon1, lat2, lon2)
 
 station_data = json.load(open('data-397-2018-02-27.json', encoding="cp1251"))
 street_data = json.load(open('data-398-2018-02-13.json', encoding="cp1251"))
 
-station_dict = {}
 
-# в файле перечислены входы, а не станции. Сделаем словарь станций с координатами
+# в файле перечислены входы, а не станции. Сделаем словарь станций с координатами station_dict
+station_dict = {}
 for station in station_data:
     station_lat = float(station["Latitude_WGS84"])
     station_lon = float(station["Longitude_WGS84"])
@@ -22,9 +26,8 @@ for station in station_data:
         'Longitude_WGS84': float(station["Longitude_WGS84"])
         }
 
+# считаем количество остановок 
 cnt = Counter()
-
-
 for station_name, station in station_dict.items():
     station_lat = float(station["Latitude_WGS84"])
     station_lon = float(station["Longitude_WGS84"])

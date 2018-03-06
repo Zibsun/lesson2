@@ -1,3 +1,9 @@
+
+# Считать из csv-файла (с http://data.mos.ru/datasets/752) количество остановок, вывести улицу, на которой 
+# больше всего остановок.
+
+
+
 from collections import Counter
 import json
 data = json.load(open('data-398-2018-02-13.json', encoding="cp1251"))
